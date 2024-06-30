@@ -24,7 +24,7 @@ describe("Order repository test", () => {
         });
 
 
-        sequelize.addModels([CustomerModel, OrderModel, OrderItemModel, ProductModel]);
+        sequelize.addModels([CustomerModel, ProductModel, OrderModel, OrderItemModel]);
         await sequelize.sync();
     });
 

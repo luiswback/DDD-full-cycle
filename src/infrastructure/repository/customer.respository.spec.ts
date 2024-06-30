@@ -3,6 +3,9 @@ import CustomerModel from "../database/sequelize/model/customer.model";
 import CustomerRepository from "./customer.repository";
 import Customer from "../../domain/entity/customer";
 import Address from "../../domain/entity/address";
+import ProductModel from "../database/sequelize/model/product.model";
+import OrderModel from "../database/sequelize/model/order.model";
+import OrderItemModel from "../database/sequelize/model/order-item.model";
 
 describe("Customer repository test", () => {
     let sequelize: Sequelize;
@@ -15,7 +18,7 @@ describe("Customer repository test", () => {
             sync: {force: true},
         });
 
-        sequelize.addModels([CustomerModel]);
+        sequelize.addModels([CustomerModel, ProductModel, OrderModel, OrderItemModel]);
         await sequelize.sync();
     });
 
@@ -34,12 +37,12 @@ describe("Customer repository test", () => {
         expect(customerModel.toJSON()).toStrictEqual(({
             id: "1",
             name: customer.name,
-            active: customer.isActive(),
-            rewardPoints: customer.rewardPoints,
             street: address.street,
             number: address.number,
             zipcode: address.zip,
             city: address.city,
+            active: customer.isActive(),
+            rewardPoints: customer.rewardPoints,
         }))
 
     });
@@ -121,8 +124,24 @@ describe("Customer repository test", () => {
         const customers = await customerRepository.findAll();
 
         expect(customers).toHaveLength(2);
-        expect(customers).toContainEqual(customer1);
-        expect(customers).toContainEqual(customer2);
+
+        expect(customers[0].id).toEqual(customer1.id);
+        expect(customers[0].name).toEqual(customer1.name);
+        expect(customers[0].address.street).toEqual(customer1.address.street);
+        expect(customers[0].address.number).toEqual(customer1.address.number);
+        expect(customers[0].address.zip).toEqual(customer1.address.zip);
+        expect(customers[0].address.city).toEqual(customer1.address.city);
+        expect(customers[0].isActive()).toEqual(customer1.isActive());
+        expect(customers[0].rewardPoints).toEqual(customer1.rewardPoints);
+
+        expect(customers[1].id).toEqual(customer2.id);
+        expect(customers[1].name).toEqual(customer2.name);
+        expect(customers[1].address.street).toEqual(customer2.address.street);
+        expect(customers[1].address.number).toEqual(customer2.address.number);
+        expect(customers[1].address.zip).toEqual(customer2.address.zip);
+        expect(customers[1].address.city).toEqual(customer2.address.city);
+        expect(customers[1].isActive()).toEqual(customer2.isActive());
+        expect(customers[1].rewardPoints).toEqual(customer2.rewardPoints);
 
     });
 });

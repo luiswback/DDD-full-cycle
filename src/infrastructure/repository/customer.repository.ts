@@ -2,6 +2,8 @@ import Customer from "../../domain/entity/customer";
 import CustomerModel from "../database/sequelize/model/customer.model";
 import CustomerRepositoryInterface from "../../domain/repository/customer-repository.interface";
 import Address from "../../domain/entity/address";
+import EventDispatcher from "../../domain/event/@shared/event-dispatcher";
+import CustomerCreatedEvent from "../../domain/event/customer/customer-created.event";
 
 export default class CustomerRepository implements CustomerRepositoryInterface {
     async create(entity: Customer): Promise<void> {
@@ -14,18 +16,20 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
             city: entity.address.city,
             active: entity.isActive(),
             rewardPoints: entity.rewardPoints,
-
         })
+        entity.registerCustomerCreateEvent();
     }
 
     async find(id: string): Promise<Customer> {
         let customerModel;
+        const eventDispatcher = new EventDispatcher();
+
         try {
             customerModel = await CustomerModel.findOne({where: {id}, rejectOnEmpty: true});
         } catch (error) {
             throw new Error("Customer not found")
         }
-        const customer = new Customer(id, customerModel.name);
+        const customer = new Customer(id, customerModel.name, eventDispatcher);
         const address = new Address(
             customerModel.street,
             customerModel.number,
@@ -38,8 +42,10 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
 
     async findAll(): Promise<Customer[]> {
         const customerModels = await CustomerModel.findAll();
+        const eventDispatcher = new EventDispatcher();
+
         const customers = customerModels.map((customerModels) => {
-            let customer = new Customer(customerModels.id, customerModels.name);
+            let customer = new Customer(customerModels.id, customerModels.name, eventDispatcher);
             customer.addRewardPoints(customerModels.rewardPoints);
             const address = new Address(
                 customerModels.street,

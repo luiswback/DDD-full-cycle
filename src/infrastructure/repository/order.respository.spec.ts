@@ -11,6 +11,7 @@ import Product from "../../domain/entity/product";
 import OrderItem from "../../domain/entity/order_item";
 import Order from "../../domain/entity/order";
 import OrderRepository from "./order.repository";
+import EventDispatcher from "../../domain/event/@shared/event-dispatcher";
 
 describe("Order repository test", () => {
     let sequelize: Sequelize;
@@ -33,8 +34,10 @@ describe("Order repository test", () => {
     });
 
     it('should create a new order', async () => {
+        const eventDispatcher = new EventDispatcher();
+
         const customerRepository = new CustomerRepository();
-        const customer = new Customer("123", 'customer 1');
+        const customer = new Customer("123", 'customer 1', eventDispatcher);
         customer.address = new Address('rua 1', 1, 'zip 1', 'city 1');
         await customerRepository.create(customer);
 
@@ -78,8 +81,10 @@ describe("Order repository test", () => {
     });
 
     it('should update an order', async () => {
+        const eventDispatcher = new EventDispatcher();
+
         const customerRepository = new CustomerRepository();
-        const customer = new Customer("123", 'customer 1');
+        const customer = new Customer("123", 'customer 1', eventDispatcher);
         customer.address = new Address('rua 1', 1, 'zip 1', 'city 1');
         await customerRepository.create(customer);
 
@@ -140,8 +145,10 @@ describe("Order repository test", () => {
     });
 
     it('should find a order', async () => {
+        const eventDispatcher = new EventDispatcher();
+
         const customerRepository = new CustomerRepository();
-        const customer = new Customer("123", 'customer 1');
+        const customer = new Customer("123", 'customer 1', eventDispatcher);
         customer.address = new Address('rua 1', 1, 'zip 1', 'city 1');
         await customerRepository.create(customer);
 
@@ -171,11 +178,12 @@ describe("Order repository test", () => {
 
     it('should find all orders', async () => {
         const customerRepository = new CustomerRepository();
-        const customer1 = new Customer("123", 'customer 1');
+        const eventDispatcher = new EventDispatcher();
+        const customer1 = new Customer("123", 'customer 1', eventDispatcher);
         customer1.address = new Address('rua 1', 1, 'zip 1', 'city 1');
         await customerRepository.create(customer1);
 
-        const customer2 = new Customer("321", 'customer 2');
+        const customer2 = new Customer("321", 'customer 2', eventDispatcher);
         customer2.address = new Address('rua 2', 2, 'zip 2', 'city 2');
         await customerRepository.create(customer2);
 

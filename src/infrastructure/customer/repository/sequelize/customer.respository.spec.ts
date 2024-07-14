@@ -1,12 +1,12 @@
 import {Sequelize} from "sequelize-typescript";
-import CustomerModel from "../database/sequelize/model/customer.model";
+import CustomerModel from "./customer.model";
 import CustomerRepository from "./customer.repository";
-import Customer from "../../domain/customer/entity/customer";
-import Address from "../../domain/customer/value-object/address";
-import ProductModel from "../database/sequelize/model/product.model";
-import OrderModel from "../database/sequelize/model/order.model";
-import OrderItemModel from "../database/sequelize/model/order-item.model";
-import EventDispatcher from "../../domain/@shared/event/event-dispatcher";
+import Customer from "../../../../domain/customer/entity/customer";
+import Address from "../../../../domain/customer/value-object/address";
+import ProductModel from "../../../product/repository/sequelize/product.model";
+import OrderModel from "../../../order/repository/sequelize/order.model";
+import OrderItemModel from "../../../order/repository/sequelize/order-item.model";
+import EventDispatcher from "../../../../domain/@shared/event/event-dispatcher";
 
 describe("Customer repository test", () => {
     let sequelize: Sequelize;

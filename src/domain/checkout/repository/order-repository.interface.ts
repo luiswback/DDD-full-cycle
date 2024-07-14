@@ -1,4 +1,4 @@
-import OrderRepository from "../../../infrastructure/repository/order.repository";
+import OrderRepository from "../../../infrastructure/order/repository/sequelize/order.repository";
 import RepositoryInterface from "../../@shared/repository/repository-interface";
 import Order from "../entity/order";
 

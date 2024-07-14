@@ -1,8 +1,8 @@
 import OrderItem from "../entity/order_item";
 import Order from "../entity/order";
 import OrderService from "./order.service";
-import Customer from "../entity/customer";
-import EventDispatcher from "../event/@shared/event-dispatcher";
+import Customer from "../../customer/entity/customer";
+import EventDispatcher from "../../@shared/event/event-dispatcher";
 
 describe("Order service unit tests", () => {
 

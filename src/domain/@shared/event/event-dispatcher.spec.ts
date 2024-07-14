@@ -1,14 +1,14 @@
 import EventDispatcher from "./event-dispatcher";
-import SendEmailWhenProductIsCreatedHandler from "../product/handler/send-email-when-product-is-created.handler";
-import ProductCreatedEvent from "../product/product-created.event";
+import SendEmailWhenProductIsCreatedHandler from "../../product/event/handler/send-email-when-product-is-created.handler";
+import ProductCreatedEvent from "../../product/event/product-created.event";
 import SendConsoleLogWhenCreateCustomer1Handler
-    from "../customer/handler/send-console-log-when-create-customer1.handler";
+    from "../../customer/event/handler/send-console-log-when-create-customer1.handler";
 import SendConsoleLogWhenCreateCustomer2Handler
-    from "../customer/handler/send-console-log-when-create-customer2.handler";
-import CustomerCreatedEvent from "../customer/customer-created.event";
+    from "../../customer/event/handler/send-console-log-when-create-customer2.handler";
+import CustomerCreatedEvent from "../../customer/event/customer-created.event";
 import SendConsoleLogWhenUpdateCustomerAddressHandler
-    from "../customer/handler/send-console-log-when-update-customer-address.handler";
-import CustomerAddressUpdatedEvent from "../customer/customer-address-updated.event";
+    from "../../customer/event/handler/send-console-log-when-update-customer-address.handler";
+import CustomerAddressUpdatedEvent from "../../customer/event/customer-address-updated.event";
 
 describe("Domain events tests", () => {
     it('should register an event handler', () => {

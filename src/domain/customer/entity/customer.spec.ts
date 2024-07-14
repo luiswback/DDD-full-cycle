@@ -1,6 +1,6 @@
 import Customer from "./customer";
-import Address from "./address";
-import EventDispatcher from "../event/@shared/event-dispatcher";
+import Address from "../value-object/address";
+import EventDispatcher from "../../@shared/event/event-dispatcher";
 
 describe("Customer unit tests", () => {
 
